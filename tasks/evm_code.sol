@@ -11,7 +11,10 @@ contact Example{
             DUP1 
             LT
             POP
-
+            /*2*/
+            PUSH1 6
+            PUSH1 10
+            LT
         }
     }
 }
