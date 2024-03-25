@@ -15,6 +15,11 @@ contact Example{
             PUSH1 6
             PUSH1 10
             LT
+            /*3*/
+            PUSH1 9
+            PUSH1 3
+            LT
+
         }
     }
 }
