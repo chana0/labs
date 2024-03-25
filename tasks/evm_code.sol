@@ -19,6 +19,13 @@ contact Example{
             PUSH1 9
             PUSH1 3
             LT
+            /*4*/
+            PUSH2 2
+            PUSH1 4
+            PUSH2 7
+            PUSH1 3
+            DUP2
+            LT
 
         }
     }
