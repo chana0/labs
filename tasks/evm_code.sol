@@ -34,6 +34,14 @@ contact Example{
             ADD
             PUSH1 3
             RETURN
+            /*6*/
+            PUSH1 3
+            MLOAD
+            PUSH2 7
+            PUSH1 5
+            ADD
+            PUSH1 3
+            RETURN
         }
     }
 }
