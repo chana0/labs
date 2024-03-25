@@ -42,6 +42,12 @@ contact Example{
             ADD
             PUSH1 3
             RETURN
+            /*7*/
+            PUSH1 0x40 // [40]
+            PUSH1 0x80 // [80,40]
+            PUSH1 0x60 // [60,80,40]
+            DUP1       // [60,60,80,40]
+            DUP1       // [60,60,60,80,40]
         }
     }
 }
