@@ -1,1 +1,23 @@
+The difference between the creation and deployed code lies in the fact that in the deployed code, there is no constructor. When executed on EVM (Ethereum Virtual Machine), there is an addition to the code containing these commands.
 
+  DUP1	
+	PUSH2	001b
+	PUSH0	
+	CODECOPY	
+	PUSH0	
+	RETURN	
+	INVALID	
+	PUSH1	80
+	PUSH1	40
+	MSTORE	
+	CALLVALUE	
+	DUP1	
+	ISZERO	
+	PUSH1	0e
+	JUMPI	
+	PUSH0	
+	DUP1	
+	REVERT	
+	JUMPDEST	
+	POP	
+	PUSH1
