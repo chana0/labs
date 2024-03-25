@@ -26,7 +26,14 @@ contact Example{
             PUSH1 3
             DUP2
             LT
-
+            /5*/
+            PUSH2 6
+            PUSH1 3
+            MLOAD
+            PUSH2 7
+            ADD
+            PUSH1 3
+            RETURN
         }
     }
 }
