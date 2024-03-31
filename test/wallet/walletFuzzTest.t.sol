@@ -8,57 +8,58 @@ import "@hack/wallet/wallet.sol";
 
 contract WalletTest is Test {
     Wallet public w;
-
-    // Everything I need to start my test
-    function setUp() public {
+function setUp() public {
         w = new Wallet();
     }
-    function testDeposite(uint sum)public{
-        uint initialBalance=wallet.getBalance();
-        address ad=vm.addr(20);
-        vm.startPrank(ad);
-        vm.deal(ad,sum);
-        payable(wallet).transfer(sum);
-        assertEq(wallet.getBalance(),initialBalance+sum,'Balance should increase by nun after transfer');
-        vm.startPrank();
+    function testAddOwner(address owner)public{
+        w.addOwner(owner);
+        assertEq(w.count(),1);
+        assertEq(w.owners(owner),true);
     }
-    function fuzzTestWhithdraw(uint sum)payable public{
-        payable(wallet).transfer(sum);
-        uint Balances=wallet.getBalance();
-        address ad=vm.addr(12);
-        wallet.addOwner(ad);
-        vm.prank(ad);
-        wallet.whithdraw(sum);
-        assertEq(wallet.getBalance(),balances-sum);
-    }
- function testAddOwner(address ad)public{
-        wallet.addOwner(address(ad));
-        assertEq(wallet.count(),1);
-        assertEq(wallet.owners(address(ad)),true);
-    }
-    function testAddOwnersAlreadyExist(address z)public{
-        wallet.addOwner(address(z));
-        assertEq(wallet.count(),1);
-        assertEq(wallet.owners(address(z)),true);
-        vm.expectRevert('The owner already exist');
-        wallet.addOwner(address(z));
-    }
-    function testHaveTreeOwners(address ad)public{
-        w.addOwner(vm.addr(1));
-        w.addOwner(vm.addr(2));
-        w.addOwner(vm.addr(3));
-        assertEq(w.count(),3);
-        vm.expectRevert('Tree are already 3 owners');
-        w.addOwner(address(ad));
-    }
-    function testAddOwner(address owner)
-    { }
     function testAddMoreThanTreeOwners(address owner)public{
+        w.addOwner(vm.addr(1));
+        w.addOwner(vm.add1(2));
+        w.addOwner(vm.addr(3));
+        vm.expectRevert('There are already 3 owners cant add owner');
+        w.addOwner(owner);
     }
-    function testDeleteOwner(address owner)public{}
-    function testDeleteNotExistsUser(address owner)public{}
-    function testDeposit(uint256 sum)public{}
-    function testWhithdraw(uint256 sum)public{}
-    function testNotOwnerCantWithdraw(uint sum){}
-    function testWhithdrawithoutEnoughMoney(uint256 sum)public{}
+    function testDeleteOwner(address owner)public{
+        w.addOwner(owner);
+        assertEq(w.owners(owner),true);
+        assertEq(w.count(),1);
+        w.deleteOwner(owner);
+        assertEq(w.owners(owner),false);
+        assertEq(w.count(),0);
+
+    }
+    function testDeleteNotExistsUser(address owner)public{
+        vm.expectRevert("Owner not exists");
+        w.deleteOwner(owner);
+    }
+    function testDeposit(uint256 sum,address owner)public{
+        vm.prank(owner);
+        vm.deal(owner,sum);
+        payable(address(w).transfer(sum));
+        assertEq(w.getBalance(),sum);
+    }
+    function testWithdraw(uint256 sum)public{
+        address owner=vm.addr(1);
+        w.addOwner(owner);
+        vm.deal(address(w),sum);
+        uint balance=w.getBalance();
+        vm.startPrank(owner);
+        w.withdraw(sum);
+        vm.stopPrank();
+        assertEq(w.getBalance(),balance-sum);
+    }
+    function testNotOwnerCatWithdraw(uint256 sum)public{
+        vm.deal(address(w),sum);
+        vm.prank(vm.addr(1));
+        vm.expectRevert('Wallet not owner');
+        w.withdraw(sum);
+    }
+    function testWithdarwithoutEnoughMoney(uint256 sum)public{
+        vm.expectRevert();
+        w.withdraw(sum);
+    }
 }
