@@ -13,7 +13,7 @@ contract WalletTest is Test {
     function setUp() public {
         w = new Wallet();
     }
-    function testAddOwner public()
+    function testAddOwner()public
     {
         w.addOwner(address(1));
         assertEq(w.count(),1);
