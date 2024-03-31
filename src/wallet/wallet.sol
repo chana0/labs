@@ -3,44 +3,39 @@ pragma solidity 0.8.24;
 contract Wallet{
     address payable public owner;
     address payable [] public owners;
+    uint256 count=0;
     mapping (address => uint256) public balances;
     constructor(){
         owner=payable(msg.sender);
+        count=0;
     }
     receive() external payable {}
-       function receiveit() external payable {
+    function receiveit() external payable {
         balances[msg.sender] += msg.value;
     }
-    modifier onlyOwner()
-    {
-        bool flag=false;
-        for(uint i=0;i<owners.length;i++)
-        {
-            if(owners[i]==msg.sender)
-            {
-                flag=true;
-                break;
-            }
-        }
-        require(flag,"you not woners");
-        _;
+    modifier onlyOwner(){
+        require(owners[msg.sender]==true,"not owner or gabay");
     }
-   /* function whithOrow(uint wad)external   {
-        require(msg.sender==owner,"onli owner can whithdraw");
-        payable (msg.sender).transfer(wad);
+    /*function withDraw(uint256 num)payable public onlyOwner{
+        payable(msg.sender).transfer(num);
     }*/
-      function withdraw(uint wad) external {
-        require(msg.sender == owner, "WALLET-not-owner");
-        balances[msg.sender] -= wad;
-        payable(msg.sender).transfer(wad);
-    }
-    function getBalance() external view returns (uint){
+    function getBalance()public view returns(uint256){
         return address(this).balance;
     }
-    function addOwner(address newOwner)public 
+    
+      function withdraw(uint sum) public onlyOwner {
+        payable(msg.sender).transfer(sum);
+    }
+    function addOwner(address newOwner)public onlyOwner
     {
-        require(owner==msg.sender,"");
-        require(owners.length;<3,"There are alraedy 3 collection");
+        require(owners.length<3,"There are alraedy 3 collection");
+        require(!owners[newOwner],'Owner alreafy exists');
         owners.push(newOwner);
+        count++;
+    }
+    function deleteOwner(address owner)public onlyOwner{
+        require(owners[owner],"owner not exists);
+        delete owners[owner];
+        count--'
     }
 }
