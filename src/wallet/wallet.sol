@@ -16,9 +16,6 @@ contract Wallet{
     modifier onlyOwner(){
         require(owners[msg.sender]==true,"not owner or gabay");
     }
-    /*function withDraw(uint256 num)payable public onlyOwner{
-        payable(msg.sender).transfer(num);
-    }*/
     function getBalance()public view returns(uint256){
         return address(this).balance;
     }
@@ -36,6 +33,6 @@ contract Wallet{
     function deleteOwner(address owner)public onlyOwner{
         require(owners[owner],"owner not exists);
         delete owners[owner];
-        count--'
+        count--;
     }
 }
