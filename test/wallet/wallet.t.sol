@@ -5,7 +5,6 @@ import "forge-std/Test.sol";
 import "forge-std/console.sol";
 import "@hack/wallet/wallet.sol";
 
-
 contract WalletTest is Test {
     Wallet public w;
 
@@ -62,4 +61,8 @@ contract WalletTest is Test {
         vm.expectRevert();
         w.withdraw(sum);
     }
+
+    function testDeposit() public {}
+
+    function testWithdraw() public {}
 }

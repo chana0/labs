@@ -8,10 +8,14 @@ contract Wallet{
     constructor(){
         owner=payable(msg.sender);
         count=0;
+
     }
     receive() external payable {}
     function receiveit() external payable {
         balances[msg.sender] += msg.value;
+
+    function withdraw(uint256 amount) public {
+        owner.transfer(amount);
     }
     _modifier onlyOwner(){
         require(owners[msg.sender]==true,"not owner or gabay");
