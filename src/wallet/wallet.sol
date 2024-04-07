@@ -13,7 +13,7 @@ contract Wallet{
     function receiveit() external payable {
         balances[msg.sender] += msg.value;
     }
-    modifier onlyOwner(){
+    _modifier onlyOwner(){
         require(owners[msg.sender]==true,"not owner or gabay");
     }
     function getBalance()public view returns(uint256){
@@ -31,7 +31,7 @@ contract Wallet{
         count++;
     }
     function deleteOwner(address owner)public onlyOwner{
-        require(owners[owner],"owner not exists);
+        require(owners[owner],"owner not exists");
         delete owners[owner];
         count--;
     }
