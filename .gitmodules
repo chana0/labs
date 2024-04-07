@@ -10,3 +10,6 @@
 [submodule "newProject/lib/forge-std"]
 	path = newProject/lib/forge-std
 	url = https://github.com/foundry-rs/forge-std
+[submodule "newProject/lib/openzeppelin-contracts"]
+	path = newProject/lib/openzeppelin-contracts
+	url = https://github.com/OpenZeppelin/openzeppelin-contracts
