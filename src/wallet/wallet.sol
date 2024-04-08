@@ -13,11 +13,11 @@ contract Wallet{
     receive() external payable {}
     function receiveit() external payable {
         balances[msg.sender] += msg.value;
-
+    }
     function withdraw(uint256 amount) public {
         owner.transfer(amount);
     }
-    _modifier onlyOwner(){
+    modifier onlyOwner(){
         require(owners[msg.sender]==true,"not owner or gabay");
     }
     function getBalance()public view returns(uint256){
