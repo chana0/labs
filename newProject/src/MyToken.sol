@@ -9,4 +9,6 @@ contract MyToken is ERC20, ERC20Permit {
     constructor() ERC20("MyToken", "MTK") ERC20Permit("MyToken") {
         
     }
+
+    myToken.transform(msg.sender,address(this))
 }
