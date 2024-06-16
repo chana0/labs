@@ -7,7 +7,6 @@ pragma solidity >=0.7.0 <0.9.0;
  * @dev Set & change owner
  */
 contract Owner {
-
     address private owner;
 
     // event for EVM logging
